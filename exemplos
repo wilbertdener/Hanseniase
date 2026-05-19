@@ -1,0 +1,41 @@
+#visualização da arvare
+from sklearn import tree
+import matplotlib.pyplot as plt
+
+arvore = modelo_rf.estimators_[0]
+
+plt.figure(figsize=(15, 10))
+
+tree.plot_tree(
+    arvore,
+    filled=True,
+    class_names=['Controle', 'Hanseniase', 'Vitiligo'],
+    fontsize=8,
+    feature_names=colunas
+)
+
+plt.show()
+
+
+
+#visualização da matriz de confusão
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+#matriz com valor numerico
+matriz_confusao = confusion_matrix(y_val, y_pred)
+visualizacao = ConfusionMatrixDisplay(confusion_matrix= matriz_confusao, display_labels=modelo_rf.classes_)
+visualizacao.plot();
+
+#matriz com porcentagem
+ConfusionMatrixDisplay.from_predictions(y_val, y_pred, normalize = 'true', cmap = 'Blues');
+
+
+#Relatório da matris de confusão
+from sklearn.metrics import classification_report
+report = classification_report(y_val, y_pred)
+print("Relatório de Classificação:\n", report)
+#precision -> “Das vezes que o modelo disse que era positivo, quantas ele acertou?”
+#recall -> “Dos pacientes que realmente eram positivos, quantos o modelo conseguiu encontrar?”
+#F1-score -> É o equilíbrio entre precision e recall.
+#Support - > quantidade real de dados
+#macro avg - > média aritmética
+#weighted avg -> média ponderada
